@@ -5,6 +5,8 @@ matrix:
   include:
   - os: linux
     env: PY_MAJOR_VER=3 OS=Linux
+  #- os: osx
+    #env: PY_MAJOR_VER=2 OS=MacOSX
   - os: osx
     env: PY_MAJOR_VER=3 OS=MacOSX
 
@@ -20,3 +22,7 @@ script:
   - cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local ..
   - make install
   - python ../test-fieldfunction.py
+  - conda create -y -n myenv python=3.5
+  - source activate myenv
+  - conda install -y pyagrum -c conda-forge
+  - python -c "import pyAgrum; print(pyAgrum.__version__)"
