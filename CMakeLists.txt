@@ -41,9 +41,12 @@ endif ()
 add_dependencies (${SWIG_MODULE_openturns_REAL_NAME} generate_swig_runtime)
 
 option (LINK_PYTHON_LIBRARY "link python lib" OFF)
+message (STATUS "PYTHON_LIBRARIES=${PYTHON_LIBRARIES} ${LINK_PYTHON_LIBRARY}")
 if (LINK_PYTHON_LIBRARY)
   target_link_libraries (${SWIG_MODULE_openturns_REAL_NAME} ${PYTHON_LIBRARIES})
 endif ()
+get_target_property(_LINK_INTERFACE_LIBRARIES ${SWIG_MODULE_openturns_REAL_NAME} LINK_INTERFACE_LIBRARIES)
+message (STATUS "LINK_INTERFACE_LIBRARIES=${_LINK_INTERFACE_LIBRARIES}")
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set_target_properties (${SWIG_MODULE_openturns_REAL_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
