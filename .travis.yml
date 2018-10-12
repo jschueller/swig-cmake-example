@@ -1,0 +1,22 @@
+language: generic
+sudo: false
+
+matrix:
+  include:
+  - os: linux
+    env: PY_MAJOR_VER=3 OS=Linux
+  - os: osx
+    env: PY_MAJOR_VER=3 OS=MacOSX
+
+install:
+  - wget -c --no-check-certificate https://repo.continuum.io/miniconda/Miniconda${PY_MAJOR_VER}-latest-${OS}-x86_64.sh -P /tmp
+  - rm -rf /tmp/miniconda
+  - bash /tmp/Miniconda${PY_MAJOR_VER}-latest-${OS}-x86_64.sh -b -p /tmp/miniconda
+  - PATH="/tmp/miniconda/bin:$PATH"
+  - conda install -y swig cmake
+
+script:
+  - mkdir build && cd build
+  - cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local ..
+  - make install
+  - python ../test-fieldfunction.py
