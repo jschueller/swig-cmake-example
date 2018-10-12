@@ -5,7 +5,7 @@ swig cmake example
 .. image:: https://travis-ci.org/jschueller/swig-cmake-example.svg?branch=master
     :target: https://travis-ci.org/jschueller/swig-cmake-example
 
-demonstrates conda build bug
+demonstrates conda build bug on osx/python3 with default channel package
 
 Usage
 -----
