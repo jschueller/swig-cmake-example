@@ -6,14 +6,14 @@ environment:
 install:
   - set CONDA_ROOT="C:\Miniconda%MINICONDA_SUFFIX%-x64"
   - set PATH=%CONDA_ROOT%;%CONDA_ROOT%\Scripts;%CONDA_ROOT%\Library\bin;%PATH%
-  - set PATH=%PATH%;C:\msys64\usr\bin
+  #- set PATH=%PATH%;C:\msys64\usr\bin
   #- conda update -y --all
   - conda install -y cmake swig
   - swig -swiglib
 
 build_script:
   - mkdir build && cd build
-  - cmake -G "Visual Studio 14 2015" -DCMAKE_INSTALL_PREFIX=%CD:\=/%/install ..
+  - cmake -G "Visual Studio 14 2015" -DCMAKE_INSTALL_PREFIX=%CD:\=/%/install -DSWIG_DIR="C:/Miniconda36-x64/Library/bin/Lib" ..
   - cmake --build . --config RelWithDebInfo --target install
   - set PYTHONPATH=%cd%\install\Lib\site-packages
   - python ../test-fieldfunction.py
