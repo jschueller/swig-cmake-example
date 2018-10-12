@@ -19,7 +19,7 @@ install:
 
 script:
   - mkdir build && cd build
-  - cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local ..
+  - cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local -DLINK_PYTHON_LIBRARY=OFF ..
   - make install
   - python ../test-fieldfunction.py
   - conda create -y -n myenv python=3.5
