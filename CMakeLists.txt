@@ -36,5 +36,10 @@ else ()
 endif ()
 add_dependencies (${SWIG_MODULE_openturns_REAL_NAME} generate_swig_runtime)
 
+option (LINK_PYTHON_LIBRARY "link python lib" ON)
+if (LINK_PYTHON_LIBRARY)
+  target_link_libraries (${SWIG_MODULE_openturns_REAL_NAME} ${PYTHON_LIBRARIES})
+endif ()
+
 install (TARGETS ${SWIG_MODULE_openturns_REAL_NAME} DESTINATION ${PYTHON_SITE_PACKAGES})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/openturns.py DESTINATION ${PYTHON_SITE_PACKAGES})
