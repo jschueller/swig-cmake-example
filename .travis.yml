@@ -5,8 +5,8 @@ matrix:
   include:
   - os: linux
     env: PY_MAJOR_VER=3 OS=Linux
-  #- os: osx
-    #env: PY_MAJOR_VER=2 OS=MacOSX
+  - os: osx
+    env: PY_MAJOR_VER=2 OS=MacOSX
   - os: osx
     env: PY_MAJOR_VER=3 OS=MacOSX
 
