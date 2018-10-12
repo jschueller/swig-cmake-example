@@ -36,9 +36,13 @@ else ()
 endif ()
 add_dependencies (${SWIG_MODULE_openturns_REAL_NAME} generate_swig_runtime)
 
-option (LINK_PYTHON_LIBRARY "link python lib" ON)
+option (LINK_PYTHON_LIBRARY "link python lib" OFF)
 if (LINK_PYTHON_LIBRARY)
   target_link_libraries (${SWIG_MODULE_openturns_REAL_NAME} ${PYTHON_LIBRARIES})
+endif ()
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  set_target_properties (${SWIG_MODULE_openturns_REAL_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
 endif ()
 
 install (TARGETS ${SWIG_MODULE_openturns_REAL_NAME} DESTINATION ${PYTHON_SITE_PACKAGES})
