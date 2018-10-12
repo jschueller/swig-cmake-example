@@ -6,7 +6,7 @@ environment:
 install:
   - set CONDA_ROOT="C:\Miniconda%MINICONDA_SUFFIX%-x64"
   - set PATH=%CONDA_ROOT%;%CONDA_ROOT%\Scripts;%CONDA_ROOT%\Library\bin;%PATH%
-  - set PATH=C:\msys64\usr\bin;%PATH%
+  - set PATH=%PATH%;C:\msys64\usr\bin
   #- conda update -y --all
   - conda install -y cmake swig
   - swig -swiglib
