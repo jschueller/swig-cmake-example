@@ -1,13 +1,11 @@
 cmake_minimum_required (VERSION 3.1.0)
 
 if (NOT DEFINED CMAKE_BUILD_TYPE)
-  set (CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Build type")
+  set (CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
 endif ()
 
 
-project(field-example)
-
-
+project(cmake-example)
 
 find_package (PythonInterp REQUIRED)
 find_package (PythonLibs REQUIRED)
