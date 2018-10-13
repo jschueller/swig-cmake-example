@@ -7,6 +7,8 @@ endif ()
 
 project(cmake-example)
 
+list (APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+
 find_package (PythonInterp REQUIRED)
 find_package (PythonLibs REQUIRED)
 if (NOT DEFINED PYTHON_SITE_PACKAGES)
@@ -40,16 +42,19 @@ else ()
 endif ()
 add_dependencies (${SWIG_MODULE_openturns_REAL_NAME} generate_swig_runtime)
 
-option (LINK_PYTHON_LIBRARY "link python lib" ON)
-if (LINK_PYTHON_LIBRARY)
-  target_link_libraries (${SWIG_MODULE_openturns_REAL_NAME} ${PYTHON_LIBRARIES})
-endif ()
-get_target_property(_LINK_INTERFACE_LIBRARIES ${SWIG_MODULE_openturns_REAL_NAME} LINK_INTERFACE_LIBRARIES)
-message (STATUS "LINK_INTERFACE_LIBRARIES=${_LINK_INTERFACE_LIBRARIES}")
+#option (LINK_PYTHON_LIBRARY "link python lib" ON)
+#if (LINK_PYTHON_LIBRARY)
+#  target_link_libraries (${SWIG_MODULE_openturns_REAL_NAME} ${PYTHON_LIBRARIES})
+#endif ()
+#get_target_property(_LINK_INTERFACE_LIBRARIES ${SWIG_MODULE_openturns_REAL_NAME} LINK_INTERFACE_LIBRARIES)
+#message (STATUS "LINK_INTERFACE_LIBRARIES=${_LINK_INTERFACE_LIBRARIES}")
 
-if (APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND NOT LINK_PYTHON_LIBRARY)
-  set_target_properties (${SWIG_MODULE_openturns_REAL_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
-endif ()
+#if (APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND NOT LINK_PYTHON_LIBRARY)
+#  set_target_properties (${SWIG_MODULE_openturns_REAL_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+#endif ()
+
+include (vtkTargetLinkLibrariesWithDynamicLookup)
+vtk_target_link_libraries_with_dynamic_lookup (${SWIG_MODULE_openturns_REAL_NAME} ${PYTHON_LIBRARIES})
 
 install (TARGETS ${SWIG_MODULE_openturns_REAL_NAME} DESTINATION ${PYTHON_SITE_PACKAGES})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/openturns.py DESTINATION ${PYTHON_SITE_PACKAGES})
