@@ -68,3 +68,4 @@ endmacro ()
 ot_add_test (fieldfunction)
 ot_add_test (mesh)
 
+add_executable(t_mesh t_mesh.cxx)

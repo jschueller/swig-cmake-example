@@ -11,6 +11,11 @@ namespace OT {
     }
     int getNVertices() const {return vertices_.size();}
 
+    const double & operator [] (const int i) const
+  {
+    return vertices_.at(i);
+  }
+    
     double __getitem__(int i) const
     {
       if (i < 0)
