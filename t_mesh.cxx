@@ -65,6 +65,10 @@ int main()
     std::cout << "CAUGHT out_of_range="<<ex.what() << std::endl; 
   }
   std::cout << "OK2" << std::endl; 
-    
+#ifdef   _LIBCPP_NO_EXCEPTIONS
+  std::cout << "def _LIBCPP_NO_EXCEPTIONS" << std::endl; 
+#else
+  std::cout << "undef _LIBCPP_NO_EXCEPTIONS" << std::endl; 
+#endif
   return 0;
 }
