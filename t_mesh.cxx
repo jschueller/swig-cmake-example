@@ -52,7 +52,8 @@ int main()
   }
   catch(...)
   {
-    std::cout << "CAUGHT ?? =" << std::endl; 
+    std::cout << "CAUGHT ?? =" << std::endl;
+    throw;
   }
   std::cout << "OK" << std::endl; 
 
