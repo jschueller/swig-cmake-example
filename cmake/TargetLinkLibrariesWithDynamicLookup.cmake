@@ -1,6 +1,6 @@
 #
 # - This module provides the function
-# vtk_target_link_libraries_with_dynamic_lookup which can be used to
+# target_link_libraries_with_dynamic_lookup which can be used to
 # "weakly" link loadable module.
 #
 # Link a library to a target such that the symbols are resolved at
@@ -20,17 +20,17 @@
 # http://blog.tim-smith.us/2015/09/python-extension-modules-os-x/
 #
 
-# Function: _vtkCheckUndefinedSymbolsAllowed
+# Function: _CheckUndefinedSymbolsAllowed
 #
 # Check if the linker allows undefined symbols for shared libraries.
 #
-# VTK_UNDEFINED_SYMBOLS_ALLOWED - true if the linker will allow
+# UNDEFINED_SYMBOLS_ALLOWED - true if the linker will allow
 #   undefined symbols for shared libraries
 #
 
-function(_vtkCheckUndefinedSymbolsAllowed)
+function(_CheckUndefinedSymbolsAllowed)
 
-  set(VARIABLE "VTK_UNDEFINED_SYMBOLS_ALLOWED")
+  set(VARIABLE "UNDEFINED_SYMBOLS_ALLOWED")
   set(cache_var "${VARIABLE}_hash")
 
 
@@ -86,12 +86,12 @@ int foo(void) {return bar()+1;}
   endif()
 endfunction()
 
-_vtkCheckUndefinedSymbolsAllowed()
+_CheckUndefinedSymbolsAllowed()
 
-macro( vtk_target_link_libraries_with_dynamic_lookup target )
+macro( target_link_libraries_with_dynamic_lookup target )
   if ( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
     set_target_properties( ${target} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup" )
-  elseif(VTK_UNDEFINED_SYMBOLS_ALLOWED)
+  elseif(UNDEFINED_SYMBOLS_ALLOWED)
     # linker allows undefined symbols, let's just not link
   else()
     target_link_libraries ( ${target} ${ARGN}  )

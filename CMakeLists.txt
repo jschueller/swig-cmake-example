@@ -53,8 +53,8 @@ add_dependencies (${SWIG_MODULE_openturns_REAL_NAME} generate_swig_runtime)
 #  set_target_properties (${SWIG_MODULE_openturns_REAL_NAME} PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
 #endif ()
 
-include (vtkTargetLinkLibrariesWithDynamicLookup)
-vtk_target_link_libraries_with_dynamic_lookup (${SWIG_MODULE_openturns_REAL_NAME} ${PYTHON_LIBRARIES})
+include (TargetLinkLibrariesWithDynamicLookup)
+target_link_libraries_with_dynamic_lookup (${SWIG_MODULE_openturns_REAL_NAME} ${PYTHON_LIBRARIES})
 
 install (TARGETS ${SWIG_MODULE_openturns_REAL_NAME} DESTINATION ${PYTHON_SITE_PACKAGES})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/openturns.py DESTINATION ${PYTHON_SITE_PACKAGES})
