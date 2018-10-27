@@ -68,4 +68,8 @@ endmacro ()
 ot_add_test (fieldfunction)
 ot_add_test (mesh)
 
+
 add_executable(t_mesh t_mesh.cxx)
+if (APPLE)
+  target_link_libraries(t_mesh c++)
+endif ()
