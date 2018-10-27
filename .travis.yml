@@ -19,10 +19,6 @@ install:
 
 script:
   - mkdir build && cd build
-  - cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local -DLINK_PYTHON_LIBRARY=OFF ..
+  - cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local ..
   - make install
-  - python ../test-fieldfunction.py
-  - conda create -y -n myenv python=3.5
-  - source activate myenv
-  - conda install -y pyagrum -c conda-forge
-  - python -c "import pyAgrum; print(pyAgrum.__version__)"
+  - ctest --output-on-failure
