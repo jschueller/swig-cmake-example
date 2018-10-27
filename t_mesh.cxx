@@ -53,9 +53,18 @@ int main()
   catch(...)
   {
     std::cout << "CAUGHT ?? =" << std::endl;
-    throw;
   }
   std::cout << "OK" << std::endl; 
 
+  try {
+    double v = mesh.at(8);
+    std::cout << "v=" << v << std::endl; 
+  }
+  catch(std::out_of_range & ex)
+  {
+    std::cout << "CAUGHT out_of_range="<<ex.what() << std::endl; 
+  }
+  std::cout << "OK2" << std::endl; 
+    
   return 0;
 }
