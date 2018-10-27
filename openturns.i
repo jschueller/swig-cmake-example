@@ -1,7 +1,36 @@
 
 %module(docstring="Field example") openturns
 
+%{
+#include <iostream>
+%}
 
+%include exception.i
+
+%exception {
+  std::cerr << "try..."<<std::endl;
+  try {
+    std::cerr << "try..."<<std::endl;
+    $action
+  }
+  catch (std::range_error & ex) {
+    std::cerr << "catch range_error"<<std::endl;
+    SWIG_exception(SWIG_IndexError,ex.what());
+  }
+  catch (std::out_of_range & ex) {
+    std::cerr << "catch out_of_range"<<std::endl;
+    SWIG_exception(SWIG_IndexError,ex.what());
+  }
+  catch (std::logic_error & ex) { // IDM : Glut Debian Squeeze with libstdc++ 4.4.5
+    std::cerr << "catch logic_error"<<std::endl;
+    SWIG_exception(SWIG_IndexError,ex.what());
+  }
+  catch (std::exception & ex) {
+    std::cerr << "catch exception"<<std::endl;
+    SWIG_exception(SWIG_RuntimeError,ex.what());
+  }
+  std::cerr << "end catch ..."<<std::endl;
+}
 
 // Mesh
 %{

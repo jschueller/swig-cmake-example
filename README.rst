@@ -20,7 +20,7 @@ Usage
     mkdir build && cd build
     cmake -DPYTHON_EXECUTABLE=/usr/bin/python3 -DCMAKE_INSTALL_PREFIX=$PWD/install ..
     make install VERBOSE=1
-    PYTHONPATH=$PWD/install/lib/python3.6/site-packages python3 ../test-fieldfunction.py
+    PYTHONPATH=$PWD/install/lib/python3.6/site-packages python3 ../t_fieldfunction.py
 
 
 Notes
