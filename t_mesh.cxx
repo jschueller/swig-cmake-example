@@ -4,6 +4,12 @@ using namespace OT;
 
 int main()
 {
+  #ifdef   _LIBCPP_NO_EXCEPTIONS
+  std::cout << "def _LIBCPP_NO_EXCEPTIONS" << std::endl; 
+#else
+  std::cout << "undef _LIBCPP_NO_EXCEPTIONS" << std::endl; 
+#endif
+  
 //   Mesh mesh(4);
   std::vector<double> mesh(3);
   try {
@@ -55,7 +61,7 @@ int main()
     std::cout << "CAUGHT ?? =" << std::endl;
   }
   std::cout << "OK" << std::endl; 
-
+  
   try {
     double v = mesh.at(8);
     std::cout << "v=" << v << std::endl; 
@@ -65,10 +71,6 @@ int main()
     std::cout << "CAUGHT out_of_range="<<ex.what() << std::endl; 
   }
   std::cout << "OK2" << std::endl; 
-#ifdef   _LIBCPP_NO_EXCEPTIONS
-  std::cout << "def _LIBCPP_NO_EXCEPTIONS" << std::endl; 
-#else
-  std::cout << "undef _LIBCPP_NO_EXCEPTIONS" << std::endl; 
-#endif
+
   return 0;
 }
