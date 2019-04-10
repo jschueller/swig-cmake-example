@@ -1,5 +1,6 @@
 #include "Mesh.hxx"
 #include <iostream>
+#include <stdexcept>
 using namespace OT;
 
 int main()
