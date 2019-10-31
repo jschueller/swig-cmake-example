@@ -1,9 +1,6 @@
 cmake_minimum_required (VERSION 3.1.0)
 
-if (NOT DEFINED CMAKE_BUILD_TYPE)
-  set (CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
-endif ()
-
+set (CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
 
 project(cmake-example)
 
@@ -20,10 +17,10 @@ set (CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 list (APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 find_package (PythonInterp REQUIRED)
-find_package (PythonLibs REQUIRED)
+find_package (PythonLibs ${PYTHON_VERSION_STRING} EXACT REQUIRED)
 if (NOT DEFINED PYTHON_SITE_PACKAGES)
   if (WIN32)
-    set(PYTHON_SITE_PACKAGES Lib/site-packages)
+    set (PYTHON_SITE_PACKAGES Lib/site-packages)
   else ()
     set (PYTHON_SITE_PACKAGES lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages)
   endif ()
@@ -62,7 +59,6 @@ enable_testing ()
 
 macro (ot_add_test name)
   add_test (NAME ${name} COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/t_${name}.py)
-  message(STATUS "PYTHONPATH=${CMAKE_INSTALL_PREFIX}/${PYTHON_SITE_PACKAGES}")
   set_tests_properties (${name} PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE_INSTALL_PREFIX}/${PYTHON_SITE_PACKAGES}")
 endmacro ()
 ot_add_test (fieldfunction)
