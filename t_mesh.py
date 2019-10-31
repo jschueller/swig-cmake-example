@@ -6,3 +6,6 @@ for v in mesh:
     print(v)
 
 print('OK')
+
+
+mesh.exportToTXT('/tmp/mesh.txt')

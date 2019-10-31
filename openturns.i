@@ -6,6 +6,7 @@
 %}
 
 %include exception.i
+%include std_string.i
 
 %exception {
   std::cerr << "try..."<<std::endl;
