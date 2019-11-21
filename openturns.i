@@ -37,7 +37,7 @@
 %{
 #include "Mesh.hxx"
 %}
-
+%ignore OT::Mesh::operator[];
 %include Mesh.hxx
 
 

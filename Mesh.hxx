@@ -14,6 +14,7 @@ namespace OT {
       for (int i = 0; i< nVert; ++i)  
         vertices_[i]= 42.0+i;
     }
+    virtual ~Mesh();
     int getNVertices() const {return vertices_.size();}
 
     const double & operator [] (const int i) const
