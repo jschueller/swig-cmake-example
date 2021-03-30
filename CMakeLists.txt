@@ -9,6 +9,12 @@ if(POLICY CMP0042)
   # Set MACOSX_RPATH to ON
   cmake_policy(SET CMP0042 NEW)
 endif()
+if(POLICY CMP0078)
+  cmake_policy(SET CMP0078 NEW)
+endif()
+if(POLICY CMP0086)
+  cmake_policy(SET CMP0086 NEW)
+endif()
 
 # RPATH settings
 set (CMAKE_INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
