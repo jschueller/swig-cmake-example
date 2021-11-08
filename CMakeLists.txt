@@ -35,9 +35,11 @@ endif ()
 find_package (SWIG REQUIRED)
 include (${SWIG_USE_FILE})
 
+set(CMAKE_SWIG_FLAGS "" CACHE STRING "swig flats")
+
 add_custom_command (OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/swig_runtime.hxx
                      COMMAND ${SWIG_EXECUTABLE}
-                     ARGS -python -c++ ${CMAKE_SWIG_FLAGS} -external-runtime ${CMAKE_CURRENT_BINARY_DIR}/swig_runtime.hxx
+                     ARGS -python -external-runtime ${CMAKE_CURRENT_BINARY_DIR}/swig_runtime.hxx
                      COMMENT "Swig header")
 add_custom_target (generate_swig_runtime DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/swig_runtime.hxx)
 
@@ -69,6 +71,7 @@ macro (ot_add_test name)
 endmacro ()
 ot_add_test (fieldfunction)
 ot_add_test (mesh)
+ot_add_test (description)
 
 
 add_executable(t_mesh t_mesh.cxx)

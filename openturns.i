@@ -33,6 +33,28 @@
   std::cerr << "end catch ..."<<std::endl;
 }
 
+// Description
+%{
+#include "Description.hxx"
+%}
+%ignore OT::Description::operator[];
+
+namespace OT {
+%extend Description {
+PyObject * __getitem__(PyObject * arg) const
+{
+  std::cout << "Description::__getitem__" << std::endl;
+
+    swig_type_info *tq = SWIG_TypeQuery("OT::Description *");
+    std::cout << "Description::__getitem__ tq=" <<tq<< std::endl;
+  
+  return Py_None;
+}
+}
+}
+
+%include Description.hxx
+
 // Mesh
 %{
 #include "Mesh.hxx"
