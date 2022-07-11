@@ -1,7 +1,25 @@
 
 %module(docstring="Field example") openturns
 
+//%feature("nothreadallow");
+
+%pythoncode %{
+import signal
+#signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+%}
+
+
 %{
+#include <setjmp.h>
+#include <signal.h>
+
+static sigjmp_buf timeout;
+
+static void backout(int sig) {
+  siglongjmp(timeout, sig);
+}
+
 #include <iostream>
 %}
 
@@ -9,6 +27,15 @@
 %include std_string.i
 
 %exception {
+  if (!sigsetjmp(timeout, 1)) {
+    signal(SIGINT,backout); // Check return?
+    $action
+  }
+  else {
+    // raise a Python exception
+    SWIG_exception(SWIG_RuntimeError, "Timeout in $decl");
+  }
+  /*
   std::cerr << "try..."<<std::endl;
   try {
     std::cerr << "try..."<<std::endl;
@@ -30,7 +57,10 @@
     std::cerr << "catch exception"<<std::endl;
     SWIG_exception(SWIG_RuntimeError,ex.what());
   }
-  std::cerr << "end catch ..."<<std::endl;
+  catch (...) {
+    std::cerr << "catch anything"<<std::endl;
+  }
+  std::cerr << "end catch ..."<<std::endl;*/
 }
 
 // Description

@@ -57,6 +57,15 @@ namespace OT {
     dataFile.close();
   }
 
+  void run()
+  {
+    int y = 0;
+    while(true)
+    {
+      y+= 40;
+    }
+  }
+  
   private:
     std::vector<double> vertices_;
   };

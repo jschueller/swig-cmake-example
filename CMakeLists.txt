@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1.0)
+cmake_minimum_required (VERSION 3.5)
 
 set (CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
 
@@ -22,7 +22,7 @@ set (CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 list (APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-find_package (PythonInterp REQUIRED)
+find_package (PythonInterp 3.6 REQUIRED)
 find_package (PythonLibs ${PYTHON_VERSION_STRING} EXACT REQUIRED)
 if (NOT DEFINED PYTHON_SITE_PACKAGES)
   if (WIN32)
