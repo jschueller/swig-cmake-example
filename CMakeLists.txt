@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required (VERSION 3.13)
 
 set (CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
 
@@ -22,8 +22,7 @@ set (CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 list (APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-find_package (PythonInterp 3.6 REQUIRED)
-find_package (PythonLibs ${PYTHON_VERSION_STRING} EXACT REQUIRED)
+find_package (Python 3.6 COMPONENTS Interpreter Development REQUIRED)
 if (NOT DEFINED PYTHON_SITE_PACKAGES)
   if (WIN32)
     set (PYTHON_SITE_PACKAGES Lib/site-packages)
@@ -35,7 +34,7 @@ endif ()
 find_package (SWIG REQUIRED)
 include (${SWIG_USE_FILE})
 
-set(CMAKE_SWIG_FLAGS "" CACHE STRING "swig flats")
+set(CMAKE_SWIG_FLAGS "" CACHE STRING "swig flags")
 
 add_custom_command (OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/swig_runtime.hxx
                      COMMAND ${SWIG_EXECUTABLE}
@@ -48,17 +47,13 @@ set_property(SOURCE openturns.i PROPERTY CPLUSPLUS ON)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-include_directories(${PYTHON_INCLUDE_DIRS})
+include_directories(${Python_INCLUDE_DIRS})
 
-if (CMAKE_VERSION VERSION_LESS 3.8)
-   swig_add_module (openturns python openturns.i PythonFieldFunction.cxx)
-else ()
-  swig_add_library (openturns LANGUAGE python SOURCES openturns.i PythonFieldFunction.cxx)
-endif ()
+swig_add_library (openturns LANGUAGE python SOURCES openturns.i PythonFieldFunction.cxx)
 add_dependencies (${SWIG_MODULE_openturns_REAL_NAME} generate_swig_runtime)
 
 include (TargetLinkLibrariesWithDynamicLookup)
-target_link_libraries_with_dynamic_lookup (${SWIG_MODULE_openturns_REAL_NAME} ${PYTHON_LIBRARIES})
+target_link_libraries_with_dynamic_lookup (${SWIG_MODULE_openturns_REAL_NAME} ${Python_LIBRARIES})
 
 install (TARGETS ${SWIG_MODULE_openturns_REAL_NAME} DESTINATION ${PYTHON_SITE_PACKAGES})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/openturns.py DESTINATION ${PYTHON_SITE_PACKAGES})
@@ -66,7 +61,7 @@ install (FILES ${CMAKE_CURRENT_BINARY_DIR}/openturns.py DESTINATION ${PYTHON_SIT
 enable_testing ()
 
 macro (ot_add_test name)
-  add_test (NAME ${name} COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/t_${name}.py)
+  add_test (NAME ${name} COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/t_${name}.py)
   set_tests_properties (${name} PROPERTIES ENVIRONMENT "PYTHONPATH=${CMAKE_INSTALL_PREFIX}/${PYTHON_SITE_PACKAGES}")
 endmacro ()
 ot_add_test (fieldfunction)
