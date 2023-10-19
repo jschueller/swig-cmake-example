@@ -11,30 +11,31 @@ import signal
 
 
 %{
-#include <setjmp.h>
-#include <signal.h>
+//#include <setjmp.h>
+//#include <signal.h>
 
-static sigjmp_buf timeout;
 
-static void backout(int sig) {
-  siglongjmp(timeout, sig);
-}
+//static sigjmp_buf timeout;
+
+//static void backout(int sig) {
+//  siglongjmp(timeout, sig);
+//}
 
 #include <iostream>
 %}
 
-%include exception.i
+//%include exception.i
 %include std_string.i
 
-%exception {
-  if (!sigsetjmp(timeout, 1)) {
-    signal(SIGINT,backout); // Check return?
-    $action
-  }
-  else {
-    // raise a Python exception
-    SWIG_exception(SWIG_RuntimeError, "Timeout in $decl");
-  }
+//%exception {
+  //if (!sigsetjmp(timeout, 1)) {
+  //  signal(SIGINT,backout); // Check return?
+  //  $action
+  //}
+  //else {
+  //  // raise a Python exception
+  //  SWIG_exception(SWIG_RuntimeError, "Timeout in $decl");
+  //}
   /*
   std::cerr << "try..."<<std::endl;
   try {
@@ -61,7 +62,7 @@ static void backout(int sig) {
     std::cerr << "catch anything"<<std::endl;
   }
   std::cerr << "end catch ..."<<std::endl;*/
-}
+//}
 
 // Description
 %{
@@ -80,9 +81,10 @@ PyObject * __getitem__(PyObject * arg) const
   
   return Py_None;
 }
-}
-}
 
+}
+}
+%copyctor OT::Description;
 %include Description.hxx
 
 // Mesh
@@ -90,6 +92,7 @@ PyObject * __getitem__(PyObject * arg) const
 #include "Mesh.hxx"
 %}
 %ignore OT::Mesh::operator[];
+%copyctor OT::Mesh;
 %include Mesh.hxx
 
 
@@ -109,11 +112,10 @@ PyObject * __getitem__(PyObject * arg) const
 #include "PythonFieldFunction.hxx"
 %}
 
+%copyctor OT::FieldFunction;
 %include FieldFunction.hxx
 
 namespace OT { %extend FieldFunction { 
-
-FieldFunction(const FieldFunction & other) { return new OT::FieldFunction(other); } 
 
 FieldFunction(PyObject * pyObj)
 {

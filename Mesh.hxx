@@ -60,7 +60,7 @@ namespace OT {
   void run()
   {
     int y = 0;
-    while(true)
+    while(y<400000)
     {
       y+= 40;
     }
