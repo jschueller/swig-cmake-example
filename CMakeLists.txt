@@ -49,13 +49,22 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 include_directories(${Python_INCLUDE_DIRS})
 
+# allows one to pass compile flags like -O1 to reduce memory usage
+set (SWIG_COMPILE_FLAGS "" CACHE STRING "C++ compiler flags used for wrapper code")
+
 swig_add_library (openturns LANGUAGE python SOURCES openturns.i PythonFieldFunction.cxx)
-add_dependencies (${SWIG_MODULE_openturns_REAL_NAME} generate_swig_runtime)
+add_dependencies (openturns generate_swig_runtime)
 
-include (TargetLinkLibrariesWithDynamicLookup)
-target_link_libraries_with_dynamic_lookup (${SWIG_MODULE_openturns_REAL_NAME} ${Python_LIBRARIES})
+if (TARGET Python::Module)
+  target_link_libraries (openturns Python::Module)
+else ()
+  include (TargetLinkLibrariesWithDynamicLookup)
+  target_link_libraries_with_dynamic_lookup (openturns ${Python_LIBRARIES})
+endif ()
 
-install (TARGETS ${SWIG_MODULE_openturns_REAL_NAME} DESTINATION ${PYTHON_SITE_PACKAGES})
+set_target_properties (openturns PROPERTIES COMPILE_FLAGS "${SWIG_COMPILE_FLAGS}")
+
+install (TARGETS openturns DESTINATION ${PYTHON_SITE_PACKAGES})
 install (FILES ${CMAKE_CURRENT_BINARY_DIR}/openturns.py DESTINATION ${PYTHON_SITE_PACKAGES})
 
 enable_testing ()
