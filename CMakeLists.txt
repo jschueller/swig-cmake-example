@@ -22,7 +22,7 @@ set (CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 list (APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-find_package (Python 3.6 COMPONENTS Interpreter Development REQUIRED)
+find_package (Python 3.6 COMPONENTS Interpreter Development.Module REQUIRED)
 if (NOT DEFINED PYTHON_SITE_PACKAGES)
   if (WIN32)
     set (PYTHON_SITE_PACKAGES Lib/site-packages)
