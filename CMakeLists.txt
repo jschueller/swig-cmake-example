@@ -27,7 +27,7 @@ if (NOT DEFINED PYTHON_SITE_PACKAGES)
   if (WIN32)
     set (PYTHON_SITE_PACKAGES Lib/site-packages)
   else ()
-    set (PYTHON_SITE_PACKAGES lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages)
+    set (PYTHON_SITE_PACKAGES lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages)
   endif ()
 endif ()
 
